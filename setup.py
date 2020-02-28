@@ -15,15 +15,20 @@ def read(filename):
 
 setup(
     name="merge_koskidata2primusdata",
-    version="0.1.0",
+    packages=["merge_koskidata2primusdata"],
+    entry_points={
+        "console_scripts": [
+            "merge_student_years=merge_koskidata2primusdata.merge_student_years:main"
+        ]
+    },
+    version="0.2.6",
     url="https://github.com/pasiol/merge_koskidata2primusdata.git",
     license="GNU Lesser General Public License v3.0 or later (LGPLv3.0+)",
     author="Pasi Ollikainen",
     author_email="pasi.ollikainen@outlook.com",
     description="Utility which merging Koski and Primus CSV reports.",
     long_description=read("README.rst"),
-    packages=find_packages(exclude=("tests",)),
-    install_requires=["pandas", "click"],
+    install_requires=["pandas>=1.0.1", "numpy>=1.18.1", "Click>=7.0"],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
