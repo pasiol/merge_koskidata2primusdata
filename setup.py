@@ -18,10 +18,11 @@ setup(
     packages=["merge_koskidata2primusdata"],
     entry_points={
         "console_scripts": [
-            "merge_student_years=merge_koskidata2primusdata.merge_student_years:main"
+            "merge_student_years=merge_koskidata2primusdata.merge_student_years:main",
+            "add_column=merge_koskidata2primusdata.add_column:main",
         ]
     },
-    version="0.2.6",
+    version="0.2.9",
     url="https://github.com/pasiol/merge_koskidata2primusdata.git",
     license="GNU Lesser General Public License v3.0 or later (LGPLv3.0+)",
     author="Pasi Ollikainen",
