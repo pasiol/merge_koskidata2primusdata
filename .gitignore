@@ -38,3 +38,4 @@ nosetests.xml
 venv
 .vscode
 .history
+build.sh
