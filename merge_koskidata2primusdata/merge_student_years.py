@@ -25,7 +25,7 @@ def main(koski_input_path, output_path, primus_data_file, primus_encoding, delim
     files = []
 
     try:
-        for file in glob.glob(f"{koski_input_path}{os.path.sep}koski*.csv"):
+        for file in glob.glob(f"{koski_input_path}{os.path.sep}*.csv"):
             files.append(
                 {"relative_pathname": file, "filename": file.split(os.path.sep)[1]}
             )
@@ -37,7 +37,10 @@ def main(koski_input_path, output_path, primus_data_file, primus_encoding, delim
 
     try:
         primus_opphenk = pd.read_csv(
-            "data/opphenk_data.csv", encoding=primus_encoding, delimiter=delimiter
+            f"{primus_data_file}", encoding=primus_encoding, delimiter=delimiter
+        )
+        logger.info(
+            f"Reading Primus data file {primus_data_file} to the dataframe succesfully."
         )
     except Exception as error:
         logger.critical(
@@ -58,7 +61,7 @@ def main(koski_input_path, output_path, primus_data_file, primus_encoding, delim
             )
         except Exception as error:
             logger.critical(
-                f"Reading koski data from file {koski_input_path}{os.path.sep}{primus_data_file} failed. error: {error}"
+                f"Reading koski data from file {koski_input_path}{os.path.sep}{file} failed. error: {error}"
             )
             sys.exit(0)
         try:

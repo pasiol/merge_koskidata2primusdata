@@ -22,14 +22,19 @@ setup(
             "add_column=merge_koskidata2primusdata.add_column:main",
         ]
     },
-    version="0.2.9",
+    version="0.3.1",
     url="https://github.com/pasiol/merge_koskidata2primusdata.git",
     license="GNU Lesser General Public License v3.0 or later (LGPLv3.0+)",
     author="Pasi Ollikainen",
     author_email="pasi.ollikainen@outlook.com",
     description="Utility which merging Koski and Primus CSV reports.",
     long_description=read("README.rst"),
-    install_requires=["pandas>=1.0.1", "numpy>=1.18.1", "Click>=7.0"],
+    install_requires=[
+        "pandas>=1.0.1",
+        "numpy>=1.18.1",
+        "Click>=7.0",
+        "openpyxl>=3.0.3",
+    ],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",
         "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
