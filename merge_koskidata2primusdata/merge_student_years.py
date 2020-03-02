@@ -14,6 +14,7 @@ import pandas as pd
     "-e", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
+@click.option("-v", "--validation", type=click.STRING, default=True, show_default=True)
 def main(koski_input_path, output_path, primus_data_file, primus_encoding, delimiter):
     logger = logging.getLogger(__name__)
     logging.basicConfig(
@@ -71,6 +72,7 @@ def main(koski_input_path, output_path, primus_data_file, primus_encoding, delim
                 how="left",
                 left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
                 right_on="Korttinumero",
+                validate="1:1",
             )
         except Exception as error:
             logger.critical(
