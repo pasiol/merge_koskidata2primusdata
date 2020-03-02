@@ -44,6 +44,16 @@
 
 # merge
 
+## Duplicates
+
+If same student is duplicate on the Koski data, getting following error on merging, when validation is on.
+
+        CRITICAL - Merging KOSKI data and Primus data failed. error: Merge keys are not unique in left dataset; not a one-to-one merge
+
+If same student is more than one time on the primusquery generated file, getting following error.
+
+        CRITICAL - Merging KOSKI data and Primus data failed. error: Merge keys are not unique in right dataset; not a one-to-one merge
+
 ## Running
 
         (venv) D:\code\opiskelijavuodet>merge_student_years 2020-03-02 output pq\opphenk_data.csv
