@@ -6,6 +6,21 @@ import logging
 import pandas as pd
 
 
+def save_merged_df(df, path, file, logger):
+    try:
+        df.to_excel(
+            f"{path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx", index=False,
+        )
+        logger.info(
+            f"Writing merged data file {path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx succesfully."
+        )
+    except Exception as error:
+        logger.critical(
+            f"Saving merged data to file {path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx failed. error: {error}"
+        )
+        pass
+
+
 @click.command()
 @click.argument("koski_input_path", type=click.Path(exists=True))
 @click.argument("output_path", type=click.Path(exists=True))
@@ -14,7 +29,7 @@ import pandas as pd
     "-e", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
-@click.option("-v", "--validation", type=click.STRING, default=True, show_default=True)
+@click.option("-v", "--validation", type=click.BOOL, default=True, show_default=True)
 def main(
     koski_input_path,
     output_path,
@@ -90,6 +105,11 @@ def main(
                     left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
                     right_on="Korttinumero",
                 )
+            merged = merged.drop("Korttinumero", 1)
+            student_dates_columns = [name for name in merged.columns if "(pv)" in name]
+            for column in student_dates_columns:
+                merged[column.replace("(pv)", "(v)")] = merged[column] / 365
+            save_merged_df(merged, output_path, file, logger)
         except Exception as error:
             logger.critical(
                 f"Merging KOSKI data and Primus data failed. error: {error}"
@@ -102,27 +122,6 @@ def main(
                 "Korttinumero"
             ].tolist()
             logger.info(f"Duplicated identifiers on Primus report: {duplicates}")
-            sys.exit(0)
-        merged = merged.drop("Korttinumero", 1)
-
-        student_dates_columns = [name for name in merged.columns if "(pv)" in name]
-        for column in student_dates_columns:
-            merged[column.replace("(pv)", "(v)")] = merged[column] / 365
-        try:
-            merged.to_excel(
-                f"{output_path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx",
-                index=False,
-            )
-            logger.info(
-                f"Writing merged data file {output_path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx succesfully."
-            )
-        except Exception as error:
-            logger.critical(
-                f"Saving merged data to file {output_path}{os.path.sep}raportti_{file['filename'][:-4]}.xlsx failed. error: {error}"
-            )
-            sys.exit(0)
-
-    merged.info()
 
 
 if __name__ == "__main__":
