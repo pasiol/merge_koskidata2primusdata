@@ -22,7 +22,7 @@ setup(
             "add_column=merge_koskidata2primusdata.add_column:main",
         ]
     },
-    version="0.3.1",
+    version="0.3.3",
     url="https://github.com/pasiol/merge_koskidata2primusdata.git",
     license="GNU Lesser General Public License v3.0 or later (LGPLv3.0+)",
     author="Pasi Ollikainen",
@@ -34,6 +34,7 @@ setup(
         "numpy>=1.18.1",
         "Click>=7.0",
         "openpyxl>=3.0.3",
+        "xlrd>=1.2.0",
     ],
     classifiers=[
         "Development Status :: 2 - Pre-Alpha",

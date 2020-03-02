@@ -9,8 +9,12 @@ import pandas as pd
 @click.command()
 @click.argument("source_file", type=click.Path(exists=True))
 @click.argument("output_path", type=click.Path(exists=True))
-@click.option("-e", "--empty_value", type=click.STRING)
-def main(source_file, output_path, empty_value=None):
+@click.option("-e", "--empty_value", default=None, type=click.STRING)
+@click.option(
+    "-e", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
+)
+@click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
+def main(source_file, output_path, empty_value, primus_encoding, delimiter):
 
     logger = logging.getLogger(__name__)
     logging.basicConfig(
@@ -22,9 +26,7 @@ def main(source_file, output_path, empty_value=None):
     files = []
 
     try:
-        for file in glob.glob(
-            f"{output_path}{os.path.sep}kuukausiraportti_koski*.xlsx"
-        ):
+        for file in glob.glob(f"{output_path}{os.path.sep}*.xlsx"):
             files.append(
                 {"relative_pathname": file, "filename": file.split(os.path.sep)[1]}
             )
@@ -35,7 +37,9 @@ def main(source_file, output_path, empty_value=None):
         sys.exit(0)
 
     try:
-        source_data = pd.read_csv(f"{source_file}", encoding="utf-8", delimiter=";")
+        source_data = pd.read_csv(
+            f"{source_file}", encoding=primus_encoding, delimiter=delimiter
+        )
     except Exception as error:
         logger.critical(f"Reading data from file {source_file} failed. error: {error}")
         sys.exit(0)
@@ -52,7 +56,7 @@ def main(source_file, output_path, empty_value=None):
             )
             sys.exit(0)
         try:
-            combined = pd.merge(
+            merged = pd.merge(
                 df,
                 source_data,
                 how="left",
@@ -61,23 +65,23 @@ def main(source_file, output_path, empty_value=None):
             )
         except Exception as error:
             logger.critical(
-                f"Combining KOSKI data and Primus data failed. error: {error}"
+                f"Merging KOSKI data and Primus data failed. error: {error}"
             )
             sys.exit(0)
         if empty_value is not None:
-            combined[combined.columns[-1]] = combined[combined.columns[-1]].fillna("Ei")
-        combined = combined.drop("Korttinumero", 1)
+            merged[merged.columns[-1]] = merged[merged.columns[-1]].fillna("Ei")
+        merged = merged.drop("Korttinumero", 1)
 
         try:
-            combined.to_excel(
+            merged.to_excel(
                 f"{output_path}{os.path.sep}{file['filename']}", index=False,
             )
             logger.info(
-                f"Writing combined data file {output_path}{os.path.sep}{file['filename']} succesfully."
+                f"Writing merged data file {output_path}{os.path.sep}{file['filename']} succesfully."
             )
         except Exception as error:
             logger.critical(
-                f"Saving combined data to file {output_path}{os.path.sep}{file['filename']} failed. error: {error}"
+                f"Saving merged data to file {output_path}{os.path.sep}{file['filename']} failed. error: {error}"
             )
             sys.exit(0)
 
