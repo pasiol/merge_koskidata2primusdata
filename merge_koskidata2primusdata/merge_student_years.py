@@ -94,6 +94,16 @@ def main(
             logger.critical(
                 f"Merging KOSKI data and Primus data failed. error: {error}"
             )
+            duplicates = df[
+                df.duplicated("Opiskeluoikeuden tunniste lähdejärjestelmässä")
+            ].tolist()
+            logger.info(f"Duplicated identifiers on Koski report: {duplicates}")
+            duplicates = primus_opphenk[
+                primus_opphenk.duplicated(
+                    "Opiskeluoikeuden tunniste lähdejärjestelmässä"
+                )
+            ].tolist()
+            logger.info(f"Duplicated identifiers on Primus report: {duplicates}")
             sys.exit(0)
         merged = merged.drop("Korttinumero", 1)
 
