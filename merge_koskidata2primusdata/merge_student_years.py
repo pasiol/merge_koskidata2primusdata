@@ -98,11 +98,9 @@ def main(
                 df.duplicated("Opiskeluoikeuden tunniste lähdejärjestelmässä")
             ]["Opiskeluoikeuden tunniste lähdejärjestelmässä"].tolist()
             logger.info(f"Duplicated identifiers on Koski report: {duplicates}")
-            duplicates = primus_opphenk[
-                primus_opphenk.duplicated(
-                    "Opiskeluoikeuden tunniste lähdejärjestelmässä"
-                )
-            ]["Opiskeluoikeuden tunniste lähdejärjestelmässä"].tolist()
+            duplicates = primus_opphenk[primus_opphenk.duplicated("Korttinumero")][
+                "Korttinumero"
+            ].tolist()
             logger.info(f"Duplicated identifiers on Primus report: {duplicates}")
             sys.exit(0)
         merged = merged.drop("Korttinumero", 1)
