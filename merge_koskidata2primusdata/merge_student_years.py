@@ -15,7 +15,14 @@ import pandas as pd
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
 @click.option("-v", "--validation", type=click.STRING, default=True, show_default=True)
-def main(koski_input_path, output_path, primus_data_file, primus_encoding, delimiter):
+def main(
+    koski_input_path,
+    output_path,
+    primus_data_file,
+    primus_encoding,
+    delimiter,
+    validation,
+):
     logger = logging.getLogger(__name__)
     logging.basicConfig(
         level=logging.INFO,
@@ -66,14 +73,23 @@ def main(koski_input_path, output_path, primus_data_file, primus_encoding, delim
             )
             sys.exit(0)
         try:
-            merged = pd.merge(
-                df,
-                primus_opphenk,
-                how="left",
-                left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
-                right_on="Korttinumero",
-                validate="1:1",
-            )
+            if validation:
+                merged = pd.merge(
+                    df,
+                    primus_opphenk,
+                    how="left",
+                    left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
+                    right_on="Korttinumero",
+                    validate="1:1",
+                )
+            else:
+                merged = pd.merge(
+                    df,
+                    primus_opphenk,
+                    how="left",
+                    left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
+                    right_on="Korttinumero",
+                )
         except Exception as error:
             logger.critical(
                 f"Merging KOSKI data and Primus data failed. error: {error}"
