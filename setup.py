@@ -22,7 +22,7 @@ setup(
             "add_column=merge_koskidata2primusdata.add_column:main",
         ]
     },
-    version="0.4.4",
+    version="0.4.5",
     url="https://github.com/pasiol/merge_koskidata2primusdata.git",
     license="GNU Lesser General Public License v3.0 or later (LGPLv3.0+)",
     author="Pasi Ollikainen",
