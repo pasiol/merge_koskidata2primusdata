@@ -11,7 +11,7 @@ import pandas as pd
 @click.argument("output_path", type=click.Path(exists=True))
 @click.option("-e", "--empty_value", default=None, type=click.STRING)
 @click.option(
-    "-e", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
+    "-c", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
 def main(source_file, output_path, empty_value, primus_encoding, delimiter):
