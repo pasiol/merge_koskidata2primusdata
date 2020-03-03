@@ -15,7 +15,7 @@ import pandas as pd
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
 @click.option(
-    "-u", "--drop_duplicates", type=click.BOOL, default=True, show_default=True
+    "-D", "--drop_duplicates", type=click.BOOL, default=True, show_default=True
 )
 @click.option("-v", "--validate", type=click.BOOL, default=True, show_default=True)
 def main(
