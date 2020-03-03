@@ -14,14 +14,25 @@ import pandas as pd
     "-c", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
 )
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
-def main(source_file, output_path, empty_value, primus_encoding, delimiter):
+@click.option(
+    "-u", "--drop_duplicates", type=click.BOOL, default=True, show_default=True
+)
+@click.option("-v", "--validate", type=click.BOOL, default=True, show_default=True)
+def main(
+    source_file,
+    output_path,
+    empty_value,
+    primus_encoding,
+    delimiter,
+    drop_duplicates,
+    validate,
+):
 
     logger = logging.getLogger(__name__)
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     )
-    # logger.infof(f"Trying to add column to file.")
 
     files = []
 
@@ -40,6 +51,8 @@ def main(source_file, output_path, empty_value, primus_encoding, delimiter):
         source_data = pd.read_csv(
             f"{source_file}", encoding=primus_encoding, delimiter=delimiter
         )
+        if drop_duplicates:
+            source_data = source_data.drop_duplicates("Korttinumero", keep="last")
     except Exception as error:
         logger.critical(f"Reading data from file {source_file} failed. error: {error}")
         sys.exit(0)
@@ -56,17 +69,35 @@ def main(source_file, output_path, empty_value, primus_encoding, delimiter):
             )
             sys.exit(0)
         try:
-            merged = pd.merge(
-                df,
-                source_data,
-                how="left",
-                left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
-                right_on="Korttinumero",
-            )
+            if validate:
+                merged = pd.merge(
+                    df,
+                    source_data,
+                    how="left",
+                    left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
+                    right_on="Korttinumero",
+                    validate="1:1",
+                )
+            else:
+                merged = pd.merge(
+                    df,
+                    source_data,
+                    how="left",
+                    left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
+                    right_on="Korttinumero",
+                )
         except Exception as error:
             logger.critical(
                 f"Merging KOSKI data and Primus data failed. error: {error}"
             )
+            duplicates = df[
+                df.duplicated("Opiskeluoikeuden tunniste lähdejärjestelmässä")
+            ]["Opiskeluoikeuden tunniste lähdejärjestelmässä"].tolist()
+            logger.info(f"Duplicated identifiers on Koski report: {duplicates}")
+            duplicates = source_data[source_data.duplicated("Korttinumero")][
+                "Korttinumero"
+            ].tolist()
+            logger.info(f"Duplicated identifiers on Primus report: {duplicates}")
             sys.exit(0)
         if empty_value is not None:
             merged[merged.columns[-1]] = merged[merged.columns[-1]].fillna("Ei")
