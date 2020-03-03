@@ -39,3 +39,4 @@ venv
 .vscode
 .history
 build.sh
+windows.md
