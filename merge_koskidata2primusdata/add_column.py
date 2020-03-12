@@ -39,7 +39,7 @@ def main(
     try:
         for file in glob.glob(f"{output_path}{os.path.sep}*.xlsx"):
             files.append(
-                {"relative_pathname": file, "filename": file.split(os.path.sep)[1]}
+                {"relative_pathname": file, "filename": file.split(os.path.sep)[-1]}
             )
     except Exception as error:
         logger.critical(
