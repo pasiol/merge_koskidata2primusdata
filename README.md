@@ -9,9 +9,12 @@
 
 To safest way is install to the virtual enviroment or run docker version.
 
+<https://realpython.com/python-virtual-environments-a-primer/>
+
 - can install without admistrative rights
 - system's Python directories remains untouched
 - everything is installed application directory
+- everythin can removed just removing application directory
 
         mkdir opiskelijavuodet && cd opiskelijavuodet
         python -m venv venv
@@ -26,12 +29,16 @@ Deactivating virtuel enviroment
 
         cd opiskelijavuodet
         venv\Scripts\activate
-        pip install --no-cache-dir --upgrade merge-koskidata2primusdata==0.3.0
+        pip install --no-cache-dir --upgrade merge-koskidata2primusdata
 
 
 ## Datafiles
 
 ### Koski-data
+
+        merge_student_years 2020-03-02 output pq\opphenk_data.csv
+
+File structure
 
          Directory of D:\code\opiskelijavuodet\2020-03-02
 
@@ -61,7 +68,7 @@ Deactivating virtuel enviroment
 
 ### Duplicates
 
-If same student is duplicate on the Koski data, getting following error on merging, when validation is on.
+If same student are duplicate on the Koski data, getting following error on merging. Same study right references multiple times to the same Primus student id. Data is somehow corrupted. Validation is the default option.
 
         CRITICAL - Merging KOSKI data and Primus data failed. error: Merge keys are not unique in left dataset; not a one-to-one merge
         INFO - Duplicated identifiers on Koski report: [NNNNNN, NNNNNN, NNNNNN]
@@ -92,7 +99,7 @@ If you want do merging despite of the duplicates, option -v can disable validati
         2020-03-02 08:46:58,701 - merge_koskidata2primusdata.merge_student_years - INFO - Writing merged data file output\raportti_koski_opiskelijavuodet_2020_tammikuu.xlsx succesfully.
 
 
-Example of the dataframe info. Fields 0-44 are Koski data and after 44 are Primus data.
+Example of the dataframe info. Fields 0-44 are the Koski data fields and after 44 are the Primus data fields.
 
         <class 'pandas.core.frame.DataFrame'>
         Int64Index: 6396 entries, 0 to 6395
