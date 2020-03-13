@@ -24,6 +24,8 @@ Options:
 Usage add_column
 ----------------
 
+Adding one column outside student registry to end of the merged report.
+
 Usage: add_column [OPTIONS] SOURCE_FILE OUTPUT_PATH
 
 Options:

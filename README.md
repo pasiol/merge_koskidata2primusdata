@@ -1,11 +1,26 @@
+# Merging Koski and Primus reports using pandas library
 
+## TODO
+
+- dockerfile
+- testdata 
 
 ## Installation
+
+To safest way is install to the virtual enviroment or run docker version.
+
+- can install without admistrative rights
+- system's Python directories remains untouched
+- everything is installed application directory
 
         mkdir opiskelijavuodet && cd opiskelijavuodet
         python -m venv venv
         venv\Scripts\activate
         pip install merge-koskidata2primusdata
+
+Deactivating virtuel enviroment
+
+        venv\Scripts\deactivate
 
 ## Upgrading
 
@@ -42,9 +57,9 @@
         02.03.2020  08:27            29 318 oppisopimus.csv
         25.02.2020  10:50               368 oppisopimus.priq
 
-# merge
+## Merging reports
 
-## Duplicates
+### Duplicates
 
 If same student is duplicate on the Koski data, getting following error on merging, when validation is on.
 
@@ -185,7 +200,3 @@ Example of the dataframe info. Fields 0-44 are Koski data and after 44 are Primu
         98  Oppisopimus (v)                                                 6396 non-null   float64
         dtypes: float64(24), int64(18), object(57)
         memory usage: 4.9+ MB
-
-# add_column 
-
-        add_column pq\oppisopimus.csv output -e Ei
