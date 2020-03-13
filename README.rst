@@ -7,8 +7,8 @@ merge_koskidata2primusdata
 
 Utility which merging Koski and Primus CSV reports. Using the Primus card number as identifier.
 
-Usage
------
+Usage merge_student_years
+-------------------------
 
 Merging Koski student years and primusquery generated CSV reports.
 
@@ -18,14 +18,21 @@ Usage: merge_student_years [OPTIONS] KOSKI_INPUT_PATH OUTPUT_PATH
 Options:
   -e, --primus_encoding TEXT  [default: utf-8-sig]
   -d, --delimiter TEXT        [default: ;]
+  -v, --validation BOOLEAN    [default: True]
   --help                      Show this message and exit.
 
+Usage add_column
+----------------
 
 Usage: add_column [OPTIONS] SOURCE_FILE OUTPUT_PATH
 
 Options:
   -e, --empty_value TEXT
-  --help                  Show this message and exit.
+  -c, --primus_encoding TEXT     [default: utf-8-sig]
+  -d, --delimiter TEXT           [default: ;]
+  -D, --drop_duplicates BOOLEAN  [default: True]
+  -v, --validate BOOLEAN         [default: True]
+  --help     
 
 Installation
 ------------

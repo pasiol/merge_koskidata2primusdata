@@ -79,6 +79,10 @@ def main(
                 delimiter=delimiter,
                 decimal=",",
             )
+            try:
+                df = df.drop("Hetu")
+            except Exception as error:
+                pass
             logger.info(
                 f"Reading KOSKI data file {file['relative_pathname']} to the dataframe succesfully."
             )
