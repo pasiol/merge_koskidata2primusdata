@@ -1,27 +1,27 @@
-# Merging Koski and Primus reports using pandas library
+# Merging Koski and Primus reports using the Pandas library
 
 ## TODO
 
-- dockerfile
+- Dockerfile
 - testdata 
 
 ## Installation
 
-To safest way is install to the virtual enviroment or run docker version.
+To safest way is install to the virtual environment or run The Docker version.
 
 <https://realpython.com/python-virtual-environments-a-primer/>
 
-- can install without admistrative rights
-- system's Python directories remains untouched
+- can install without administrative rights
+- system's Python directories remain untouched
 - everything is installed application directory
-- everythin can removed just removing application directory
+- everything can be removed just removing application directory
 
         mkdir opiskelijavuodet && cd opiskelijavuodet
         python -m venv venv
         venv\Scripts\activate
         pip install merge-koskidata2primusdata
 
-Deactivating virtuel enviroment
+Deactivating virtual environment
 
         venv\Scripts\deactivate
 
@@ -68,17 +68,18 @@ File structure
 
 ### Duplicates
 
-If same student are duplicate on the Koski data, getting following error on merging. Same study right references multiple times to the same Primus student id. Data is somehow corrupted. Validation is the default option.
+If same Primus student ids were duplicate on the Koski data, getting the following error on merging. Different KOSKI study rights reference multiple times to the same Primus student id. The KOSKI data is somehow corrupted. Validation is the default option.
 
         CRITICAL - Merging KOSKI data and Primus data failed. error: Merge keys are not unique in left dataset; not a one-to-one merge
         INFO - Duplicated identifiers on Koski report: [NNNNNN, NNNNNN, NNNNNN]
 
-If same student is more than one time on the primusquery generated file, getting following error.
+If the same student is more than one time on the primusquery generated file, getting the following error.
 
         CRITICAL - Merging KOSKI data and Primus data failed. error: Merge keys are not unique in right dataset; not a one-to-one merge
         INFO - Duplicated identifiers on Primus report: [NNNNNN, NNNNNN, NNNNNN]
 
-If you want do merging despite of the duplicates, option -v can disable validation.
+If you want to do merging despite the duplicates, option -v can disable validation.
+
 
         merge_student_years 2020-03-02 output pq\opphenk_data.csv -v False
 
@@ -99,7 +100,7 @@ If you want do merging despite of the duplicates, option -v can disable validati
         2020-03-02 08:46:58,701 - merge_koskidata2primusdata.merge_student_years - INFO - Writing merged data file output\raportti_koski_opiskelijavuodet_2020_tammikuu.xlsx succesfully.
 
 
-Example of the dataframe info. Fields 0-44 are the Koski data fields and after 44 are the Primus data fields.
+Example of the data frame info. Fields 0-44 are the Koski data fields and after 44 are the Primus data fields.
 
         <class 'pandas.core.frame.DataFrame'>
         Int64Index: 6396 entries, 0 to 6395
