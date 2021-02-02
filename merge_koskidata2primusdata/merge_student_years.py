@@ -28,6 +28,9 @@ def save_merged_df(df, path, file, logger):
 @click.option(
     "-e", "--primus_encoding", type=click.STRING, default="utf-8-sig", show_default=True
 )
+@click.option(
+    "-E", "--koski_encoding", type=click.STRING, default="utf-8", show_default=True
+)
 @click.option("-d", "--delimiter", type=click.STRING, default=";", show_default=True)
 @click.option("-v", "--validation", type=click.BOOL, default=True, show_default=True)
 def main(
@@ -35,6 +38,7 @@ def main(
     output_path,
     primus_data_file,
     primus_encoding,
+    koski_encoding,
     delimiter,
     validation,
 ):
@@ -75,7 +79,7 @@ def main(
         try:
             df = pd.read_csv(
                 file["relative_pathname"],
-                encoding="windows-1252",
+                encoding=koski_encoding,
                 delimiter=delimiter,
                 decimal=",",
             )

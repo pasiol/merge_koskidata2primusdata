@@ -17,18 +17,18 @@ To safest way is install to the virtual environment or run The Docker version.
 - everything can be removed just removing application directory
 
         mkdir opiskelijavuodet && cd opiskelijavuodet
-        python -m venv venv
-        venv\Scripts\activate
+        python -m venv .venv
+        .venv\Scripts\activate
         pip install merge-koskidata2primusdata
 
 Deactivating virtual environment
 
-        venv\Scripts\deactivate
+        .venv\Scripts\deactivate
 
 ## Upgrading
 
         cd opiskelijavuodet
-        venv\Scripts\activate
+        .venv\Scripts\activate
         pip install --no-cache-dir --upgrade merge-koskidata2primusdata
 
 
