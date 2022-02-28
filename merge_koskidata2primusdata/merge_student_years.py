@@ -113,7 +113,7 @@ def main(
                     left_on="Opiskeluoikeuden tunniste lähdejärjestelmässä",
                     right_on="Korttinumero",
                 )
-            merged = merged.drop("Korttinumero", 1)
+            merged = merged.drop(columns=["Korttinumero"], axis=1)
             student_dates_columns = [name for name in merged.columns if "(pv)" in name]
             for column in student_dates_columns:
                 merged[column.replace("(pv)", "(v)")] = merged[column] / 365
