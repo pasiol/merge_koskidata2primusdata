@@ -2,4 +2,6 @@
 
 __version__ = "0.9.1"
 __author__ = "Pasi Ollikainen <pasi.ollikainen@outlook.com>"
+commit = True
+tag = True
 
