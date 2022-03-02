@@ -101,7 +101,7 @@ def main(
             sys.exit(0)
         if empty_value is not None:
             merged[merged.columns[-1]] = merged[merged.columns[-1]].fillna("Ei")
-        merged = merged.drop("Korttinumero", 1)
+        merged = merged.drop(labels=["Korttinumero"], axis=1)
 
         try:
             merged.to_excel(
