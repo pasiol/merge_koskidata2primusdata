@@ -64,7 +64,7 @@ def main(
 
     try:
         primus_opphenk = pd.read_csv(
-            f"{primus_data_file}", encoding=primus_encoding, delimiter=delimiter
+            f"{primus_data_file}", encoding=primus_encoding, delimiter=delimiter, low_memory=False
         )
         logger.info(
             f"Reading Primus data file {primus_data_file} to the dataframe succesfully."
